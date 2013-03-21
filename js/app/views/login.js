@@ -10,7 +10,7 @@ var LoginView = Backbone.View.extend({
         this.model.set('password', form.password.value);
         var that = this;
         this.model.fetch({data: JSON.stringify(this.model.attributes), type: 'POST', contentType: 'application/json'}).then(function() {
-            console.log(that.model.get('session_id'));
+            setCookie('session_id', that.model.get('session_id'));
             TTRSS.navigate("categories", {trigger: true});
         });
         return false;

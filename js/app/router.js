@@ -35,7 +35,7 @@ window.TTRSS = new (Backbone.Router.extend({
     categories: function () {
         console.log('toto');
         this.categories = new Category({op: 'getCategories'});
-        this.categories.set('sid', this.loginView.model.get('session_id'));
+        this.categories.set('sid', getCookie('session_id'));
         var that = this;
         this.categories.fetch({data: JSON.stringify(this.categories.attributes), type: 'POST', contentType: 'application/json'}).then(function() {
             that.categoriesView = new CategoryView({model: that.categories});
