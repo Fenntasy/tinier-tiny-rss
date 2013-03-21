@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bootstrap 101 Template</title>
+    <title>Tinier Tiny RSS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet" media="screen">
@@ -11,7 +11,7 @@
 
     <div class="navbar navbar-fixed-top navbar-inverse">
       <div class="navbar-inner">
-        <a class="brand" href="#">Tiny Tiny RSS</a>
+        <a class="brand" href="/tinier-tiny-rss">Tinier Tiny RSS</a>
       </div>
     </div>
 
@@ -19,10 +19,35 @@
 
     </div>
 
+    <script type="text/html" id="login-view-tpl">
+        <form class="form-signin">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <input type="text" name="login" class="input-block-level" placeholder="Email address">
+            <input type="password" name="password" class="input-block-level" placeholder="Password">
+            <button class="btn btn-large btn-primary">Sign in</button>
+        </form>
+    </script>
+    <script type="text/html" id="categories-view-tpl">
+        <ul>
+            <% for (var i = 0; i < content.length; i++) { %>
+                <li><%= content[i].title %><span class="badge"><%= content[i].unread %></span></li>
+            <% } %>
+        </ul>
+    </script>
+
+
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/underscore-min.js"></script>
     <script src="js/backbone-min.js"></script>
-    <script src="js/ttrss.js"></script>
+    <!--<script src="js/ttrss.js"></script>-->
+    <script src="js/app/models/login.js"></script>
+    <script src="js/app/models/category.js"></script>
+    <script src="js/app/views/login.js"></script>
+    <script src="js/app/views/categories.js"></script>
+    <script src="js/app/views/category.js"></script>
+    <!--<script src="js/app/collections/categories.js"></script>-->
+    <script src="js/app/router.js"></script>
+    <script src="js/app/application.js"></script>
   </body>
 </html>

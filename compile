@@ -1,4 +1,8 @@
 uglifyjs js/app/models/login.js \
 js/app/models/category.js \
 js/app/views/login.js \
+js/app/views/categories.js \
+js/app/collections/categories.js \
+js/app/router.js \
+js/app/application.js \
 -o js/ttrss.js

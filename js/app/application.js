@@ -1,3 +1,3 @@
 $(function(){
-    TTRSS.start()
+    TTRSS.start().navigate("", {trigger: true});
 });

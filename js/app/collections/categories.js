@@ -1,4 +1,4 @@
-window.Categories = Backbone.Collection.extend({
+var Categories = Backbone.Collection.extend({
   model: Category,
-  url: 'http://rss.billey.me/api',
+  url: 'http://rss.billey.me/tinier-tiny-rss/api.php'
 })

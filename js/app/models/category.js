@@ -1,4 +1,3 @@
 var Category = Backbone.Model.extend({
-    urlRoot: 'api.php'
+    urlRoot: 'http://rss.billey.me/tinier-tiny-rss/api.php'
 });
-var categories = new Category({op: 'getCategories'});
