@@ -1,1 +1,3 @@
-$(function(){ TTRSS.start() });
+$(function(){
+    TTRSS.start()
+});

@@ -1,0 +1,4 @@
+uglifyjs js/app/models/login.js \
+js/app/models/category.js \
+js/app/views/login.js \
+-o js/ttrss.js
