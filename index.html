@@ -28,9 +28,9 @@
         </form>
     </script>
     <script type="text/html" id="categories-view-tpl">
-        <ul>
+        <ul class="nav nav-tabs nav-stacked">
             <% for (var i = 0; i < content.length; i++) { %>
-                <li><%= content[i].title %><span class="badge"><%= content[i].unread %></span></li>
+                <li><a href="#"><%= content[i].title %><span class="badge pull-right"><%= content[i].unread %></span></a></li>
             <% } %>
         </ul>
     </script>
