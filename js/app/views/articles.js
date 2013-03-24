@@ -8,7 +8,10 @@ var ArticleView = Backbone.View.extend({
         return this;
     },
     showArticle: function(e) {
-        $(".article-content").hide();
-        $(".article-content", $(e.currentTarget).parent()).show();
+        var current_article = $(".article-content", $(e.currentTarget).parent());
+        if (!current_article.hasClass("visible")) {
+            $(".visible").removeClass("visible");
+        }
+        current_article.toggleClass('visible');
     }
 });

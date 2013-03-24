@@ -3,6 +3,21 @@ body {
     background-color: #f5f5f5;
 }
 
+#app {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#categories {
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    padding-top: 40px;
+}
+
 .container {
 }
 
@@ -34,3 +49,50 @@ body {
 .article-content {
     display: none;
 }
+
+#feeds {
+    padding-top: 40px;
+}
+
+#feeds ul {
+    width: 99%;
+}
+
+#feeds li {
+    list-style-type: none;
+    border: 1px solid #DDD;
+    padding: 7px;
+    cursor: pointer;
+}
+
+#feeds .title {
+    height: 30px;
+    width: 100%;
+    display: inline-block;
+}
+
+#feeds .title.unread {
+    font-weight: bold;
+}
+
+#feeds .link {
+    margin-top: -5px;
+    font-weight: normal;
+}
+
+#feeds .article-content {
+    border: 1px solid #DDD;
+    background: white;
+    width: 100%;
+    padding-top: 10px;
+    display: none;
+}
+#feeds .article-content.visible {
+    display: block;
+}
+
+#feeds .article-content .content {
+    max-width: 600px;
+    margin: auto;
+}
+
