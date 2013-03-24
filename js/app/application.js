@@ -21,7 +21,7 @@ function getCookie(c_name) {
 
 $(function(){
     TTRSS.start();
-    if (getCookie('session_id')) {
+    if (getCookie('session_id') && getCookie('session_id').length > 1) {
         TTRSS.navigate("categories", {trigger: true});
     } else {
         TTRSS.navigate("", {trigger: true});

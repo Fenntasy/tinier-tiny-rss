@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="container" id="app">
+    <div class="container-fluid" id="app">
 
     </div>
 
@@ -28,13 +28,45 @@
         </form>
     </script>
     <script type="text/html" id="categories-view-tpl">
-        <ul class="nav nav-tabs nav-stacked">
+        <div class="span3">
+            <ul class="nav nav-tabs nav-stacked">
+                <% for (var i = 0; i < content.length; i++) { %>
+                    <li>
+                        <a href="#feed/<%= content[i].id %>"><%= content[i].title %>
+                            <% if (content[i].unread) { %>
+                                <span class="badge pull-right"><%= content[i].unread %></span>
+                            <% } %>
+                        </a>
+                        <ul id="cat-<%= content[i].id %>" class="category"></ul>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+        <div class="span9" id="feeds">test</div>
+    </script>
+    <script type="text/html" id="feed-view-tpl">
+        <% for (var i = 0; i < content.length; i++) { %>
+        <li>
+            <a href="#feed/view/<%= content[i].id %>"><%= content[i].title %>
+                <% if (content[i].unread) { %>
+                <span class="badge pull-right"><%= content[i].unread %></span>
+                <% } %>
+            </a>
+        </li>
+        <% } %>
+    </script>
+    <script type="text/html" id="article-view-tpl">
+        <ul>
             <% for (var i = 0; i < content.length; i++) { %>
-                <li><a href="#"><%= content[i].title %><span class="badge pull-right"><%= content[i].unread %></span></a></li>
+            <li>
+                <span class="title"><%= content[i].title.replace(/&amp;#([0-9]+);/, function(match, p1) { return String.fromCharCode(p1); }) %></span>
+                <a href="<%= content[i].link %>" class="link" target="_blank">link</a>
+                <div class="article-content"><%= content[i].content %></div>
+                <div class="article-iframe"></div>
+            </li>
             <% } %>
         </ul>
     </script>
-
 
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -43,9 +75,13 @@
     <!--<script src="js/ttrss.js"></script>-->
     <script src="js/app/models/login.js"></script>
     <script src="js/app/models/category.js"></script>
+    <script src="js/app/models/feed.js"></script>
+    <script src="js/app/models/articles.js"></script>
     <script src="js/app/views/login.js"></script>
     <script src="js/app/views/categories.js"></script>
     <script src="js/app/views/category.js"></script>
+    <script src="js/app/views/feed.js"></script>
+    <script src="js/app/views/articles.js"></script>
     <!--<script src="js/app/collections/categories.js"></script>-->
     <script src="js/app/router.js"></script>
     <script src="js/app/application.js"></script>
