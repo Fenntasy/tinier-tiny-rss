@@ -28,30 +28,37 @@
         </form>
     </script>
     <script type="text/html" id="categories-view-tpl">
-        <div class="span3" id="categories">
-            <ul class="nav nav-tabs nav-stacked">
-                <% for (var i = 0; i < content.length; i++) { %>
-                    <% if (content[i].id > 0) { %>
-                        <li>
-                            <a href="#feed/<%= content[i].id %>">
-                                <i class="icon-folder-close"></i>
-                                <%= content[i].title %>
-                                <% if (content[i].unread) { %>
-                                    <span class="badge pull-right"><%= content[i].unread %></span>
-                                <% } %>
-                            </a>
-                            <ul id="cat-<%= content[i].id %>" class="category"></ul>
-                        </li>
-                    <% } %>
-                <% } %>
-            </ul>
+        <div class="row-fluid">
+            <div class="span2" id="categories">
+                <ul class="nav nav-tabs nav-stacked">
+                </ul>
+            </div>
+            <div class="span9 offset2" id="feeds"></div>
         </div>
-        <div class="span9 offset3" id="feeds"></div>
+    </script>
+    <script type="text/html" id="category-view-tpl">
+        <div>
+            <button class="btn btn-link expand-category" data-cat_id="<%= id %>">
+                <i class="icon-plus"></i>
+                <i class="icon-minus"></i>
+            </button>
+            <a href="#feed/cat/view/<%= id %>">
+                <i class="icon-folder-close"></i>
+                <%= title %>
+            </a>
+            <% if (unread) { %>
+            <span class="badge pull-right"><%= unread %></span>
+            <% } %>
+        </div>
+        <ul id="cat-<%= id %>" class="category"></ul>
     </script>
     <script type="text/html" id="feed-view-tpl">
         <% for (var i = 0; i < content.length; i++) { %>
         <li>
-            <a href="#feed/view/<%= content[i].id %>"><%= content[i].title %>
+            <a href="#feed/view/<%= content[i].id %>">
+                <i class="icon-tasks"></i>
+                <%= content[i].title.substr(0, 16) %>
+                <%= (content[i].title.length > 16)?'...':'' %>
                 <% if (content[i].unread) { %>
                 <span class="badge pull-right"><%= content[i].unread %></span>
                 <% } %>
@@ -65,6 +72,7 @@
             <li>
                 <span class="title<% if (content[i].unread) { %> unread<% } %>">
                     <%= content[i].title.replace(/&amp;#([0-9]+);/, function(match, p1) { return String.fromCharCode(p1); }) %>
+                    <span class="feed-title">(<%= content[i].feed_title %>)</span>
                     <a href="<%= content[i].link %>" class="link pull-right btn" target="_blank"><i class="icon-globe"></i> link</a>
                 </span>
 
@@ -93,7 +101,7 @@
     <script src="js/app/views/category.js"></script>
     <script src="js/app/views/feed.js"></script>
     <script src="js/app/views/articles.js"></script>
-    <!--<script src="js/app/collections/categories.js"></script>-->
+    <script src="js/app/collections/categories.js"></script>
     <script src="js/app/router.js"></script>
     <script src="js/app/application.js"></script>
   </body>

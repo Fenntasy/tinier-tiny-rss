@@ -10,7 +10,7 @@ var ArticleView = Backbone.View.extend({
     showArticle: function(e) {
         var current_article = $(".article-content", $(e.currentTarget).parent());
         if (!current_article.hasClass("visible")) {
-            $(".visible").removeClass("visible");
+            $(".visible", "#feeds").removeClass("visible");
         }
         current_article.toggleClass('visible');
     }

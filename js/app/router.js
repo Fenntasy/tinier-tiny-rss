@@ -2,7 +2,7 @@ window.TTRSS = new (Backbone.Router.extend({
     routes: {
         "": "index",
         "categories": "categories",
-        "feed/:id": "feed",
+        "feed/cat/view/:id": "feed",
         "feed/view/:id": "articles"
     },
 
@@ -36,40 +36,40 @@ window.TTRSS = new (Backbone.Router.extend({
 
     categories: function () {
         console.log('toto');
-        this.categories = new Category({op: 'getCategories'});
-        this.categories.set('sid', getCookie('session_id'));
+        this.categories = new Categories();
         var that = this;
-        this.categories.fetch({data: JSON.stringify(this.categories.attributes), type: 'POST', contentType: 'application/json'}).then(function() {
-            if (that.categories.get('content').error && that.categories.get('content').error == 'NOT_LOGGED_IN') {
-                setCookie('session_id', '0');
-                TTRSS.navigate("", {trigger: true});
-                return;
-            }
-            that.categoriesView = new CategoryView({model: that.categories});
+        var fetchData = {
+            op: 'getCategories',
+            sid: getCookie('session_id')
+        };
+        this.categories.fetch({data: JSON.stringify(fetchData), type: 'POST', contentType: 'application/json'}).success(function() {
+            that.categoriesView = new CategoriesView({collection: that.categories});
             that.categoriesView.render();
-            $('#app').html(that.categoriesView.el);
+            var template = _.template($("#categories-view-tpl").html());
+            $('#app').html(template());
+            $("ul", "#categories").html(that.categoriesView.el);
         });
     },
 
     feed: function(id) {
-        if ($("li", "#cat-" + id).size()) {
-            $("#cat-" + id).toggleClass("visible");
-        } else {
-            var feed = new Feed({op: 'getFeeds'});
-            feed.set({
-                sid: getCookie('session_id'),
-                cat_id: id,
-                unread_only: false,
-                limit: 20,
-                offset: 0,
-                include_nested: true
-            });
-            feed.fetch({data: JSON.stringify(feed.attributes), type: 'POST', contentType: 'application/json'}).then(function() {
-                var feedView = new FeedView({model: feed});
-                feedView.render();
-                $("#cat-" + id).toggleClass("visible").html(feedView.el);
-            });
-        }
+        var articles = new Article({op: 'getHeadlines'});
+        articles.set({
+            sid: getCookie('session_id'),
+            feed_id: id,
+            limit: 20,
+            is_cat: true,
+            skip: 0,
+            include_nested: true,
+            show_excerpt: true,
+            show_content: true,
+            view_mode: 'unread',
+            include_attachments: false
+        });
+        articles.fetch({data: JSON.stringify(articles.attributes), type: 'POST', contentType: 'application/json'}).then(function() {
+            var articlesView = new ArticleView({model: articles});
+            articlesView.render();
+            $("#feeds").html(articlesView.el);
+        });
     },
 
     articles: function(id) {
