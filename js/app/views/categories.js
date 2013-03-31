@@ -14,7 +14,19 @@ var CategoriesView = Backbone.View.extend({
     },
 
     addOne: function(category){
-        var category = new CategoryView({model: category});
-        this.$el.append(category.render().el);
+        var feeds = new Feeds();
+        var fetchData = {
+            op: 'getFeeds',
+            sid: getCookie('session_id'),
+            cat_id: category.get('id'),
+            unread_only: false,
+            limit: 20,
+            offset: 0,
+            include_nested: true
+        };
+        feeds.fetch({data: JSON.stringify(fetchData), type: 'POST', contentType: 'application/json'});
+        category.set('feeds', feeds);
+        var categoryView = new CategoryView({model: category});
+        this.$el.append(categoryView.render(feeds).el);
     }
 });
