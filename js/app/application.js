@@ -5,6 +5,10 @@ function setCookie(c_name,value,exdays) {
     document.cookie=c_name + "=" + c_value;
 }
 
+function deleteCookie(c_name) {
+    setCookie(c_name, '', 0);
+}
+
 function getCookie(c_name) {
     var i,x,y,ARRcookies=document.cookie.split(";");
     for (i=0;i<ARRcookies.length;i++)

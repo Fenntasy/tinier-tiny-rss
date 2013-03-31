@@ -3,7 +3,8 @@ window.TTRSS = new (Backbone.Router.extend({
         "": "index",
         "categories": "categories",
         "feed/cat/view/:id": "feed",
-        "feed/view/:id": "articles"
+        "feed/view/:id": "articles",
+        "logout": "logout"
     },
 
     initialize: function () {
@@ -49,7 +50,7 @@ window.TTRSS = new (Backbone.Router.extend({
                 sid: getCookie('session_id')
             }).then(function(data) {
                 if (!data.content.status) {
-                    setCookie('session_id', '0');
+                    deleteCookie('session_id');
                     if (getCookie('login') && getCookie('password')) {
                         TTRSS.getJSON({
                             op: 'login',
@@ -139,5 +140,13 @@ window.TTRSS = new (Backbone.Router.extend({
             articlesView.render();
             $("#feeds").html(articlesView.el);
         });
+    },
+
+    logout: function() {
+        deleteCookie('session_id');
+        deleteCookie('login');
+        deleteCookie('password');
+
+        TTRSS.navigate("", {trigger: true});
     }
 }));
