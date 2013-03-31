@@ -6,11 +6,25 @@ var LoginView = Backbone.View.extend({
     send: function(e) {
         e.preventDefault();
         var form = $("form", this.$el).get(0);
-        this.model.set('user', form.login.value);
-        this.model.set('password', form.password.value);
         var that = this;
-        this.model.fetch({data: JSON.stringify(this.model.attributes), type: 'POST', contentType: 'application/json'}).then(function() {
-            setCookie('session_id', that.model.get('session_id'));
+        var fetchData = {
+            op: 'login',
+            password: form.password.value,
+            user: form.login.value
+        };
+        if (form.remember.checked) {
+            setCookie('login', form.login.value);
+            setCookie('password', form.password.value);
+        }
+        $.getJSON('http://rss.billey.me/tinier-tiny-rss/api.php',
+            {
+                data: JSON.stringify(fetchData),
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json'
+            }
+        ).then(function(data) {
+            setCookie('session_id', data.content.session_id);
             TTRSS.navigate("categories", {trigger: true});
         });
         return false;

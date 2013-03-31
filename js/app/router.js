@@ -24,18 +24,67 @@ window.TTRSS = new (Backbone.Router.extend({
     },
 
     index: function () {
-        this.loginView = new LoginView({model: new Login({op: 'login'})});
+        this.loginView = new LoginView({model: new Login()});
         this.loginView.render();
         $('#app').html(this.loginView.el);
     },
 
+    getJSON: function(data) {
+        return $.ajax({
+            url: 'http://rss.billey.me/tinier-tiny-rss/api.php',
+            data: JSON.stringify(data),
+            type: 'POST',
+            contentType: "application/json",
+            emulateHTTP: false,
+            emulateJSON: false,
+            parse: true,
+            dataType: 'json'
+        });
+    },
+
     start: function () {
+        if (getCookie('session_id')) {
+            TTRSS.getJSON({
+                op: 'isLoggedIn',
+                sid: getCookie('session_id')
+            }).then(function(data) {
+                if (!data.content.status) {
+                    setCookie('session_id', '0');
+                    if (getCookie('login') && getCookie('password')) {
+                        TTRSS.getJSON({
+                            op: 'login',
+                            user: getCookie('login'),
+                            password: getCookie('password')
+                        }).then(function(data) {
+                            setCookie('session_id', data.content.session_id);
+                            TTRSS.navigate("categories", {trigger: true});
+                        });
+                    } else {
+                        TTRSS.navigate("", {trigger: true});
+                    }
+                } else {
+                    TTRSS.navigate("categories", {trigger: true});
+                }
+            });
+        } else {
+            if (getCookie('login') && getCookie('password')) {
+                TTRSS.getJSON({
+                    op: 'login',
+                    user: getCookie('login'),
+                    password: getCookie('password')
+                }).then(function(data) {
+                    setCookie('session_id', data.content.session_id);
+                    TTRSS.navigate("categories", {trigger: true});
+                });
+            } else {
+                TTRSS.navigate("", {trigger: true});
+            }
+        }
         Backbone.history.start();
         return this;
     },
 
     categories: function () {
-        console.log('toto');
         this.categories = new Categories();
         var that = this;
         var fetchData = {

@@ -8,13 +8,13 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
+    padding-top: 70px;
 }
 
 #categories {
     position: fixed;
     height: 100%;
     overflow: auto;
-    padding-top: 70px;
 }
 
 .container {
@@ -36,6 +36,10 @@ body {
     height: auto;
     margin-bottom: 15px;
     padding: 7px 9px;
+}
+
+.form-signin label {
+    text-align: left;
 }
 
 .category {
@@ -68,7 +72,6 @@ body {
 }
 
 #feeds {
-    padding-top: 70px;
 }
 
 #feeds ul {
